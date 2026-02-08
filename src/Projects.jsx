@@ -13,8 +13,8 @@ const projects = [
     title: "Personal Portfolio",
     description: "The recursive website you are looking at right now. Built with a focus on high-performance animations and a cyber-minimalist aesthetic.",
     tech: ["React", "Framer Motion", "GSAP", "Tailwind"],
-    link: "janakkabra.in",
-    github: "#"
+    link: "https://janakkabra.in",
+    github: "https://github.com/Jenak26/janak-portfolio"
   }
 ];
 
