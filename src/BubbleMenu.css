@@ -1,0 +1,202 @@
+/* --- SHARED VARIABLES --- */
+:root {
+  --glass-bg: rgba(10, 10, 10, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.3);
+  --glass-blur: blur(16px);
+}
+
+/* --- ANIMATIONS --- */
+@keyframes shine {
+  0% { left: -100%; opacity: 0; }
+  10% { opacity: 0.5; }
+  20% { left: 200%; opacity: 0; } /* Fast sweep */
+  100% { left: 200%; opacity: 0; } /* Wait for next loop */
+}
+
+/* --- MOBILE STYLES --- */
+.bubble-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding: 1.5rem;
+  pointer-events: none;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif; /* Cleaner Font */
+}
+
+/* Mobile Logo */
+.bubble.logo-bubble {
+  pointer-events: auto;
+  font-weight: 800;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: rgba(20, 20, 20, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  color: white;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+/* Mobile Toggle */
+.bubble.toggle-bubble {
+  pointer-events: auto;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: rgba(20, 20, 20, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  color: white;
+  border-radius: 14px;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.bubble-menu-items {
+  pointer-events: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.96);
+  backdrop-filter: blur(20px);
+}
+
+.pill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pill-link {
+  display: block;
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #666;
+  padding: 10px 30px;
+  transition: all 0.4s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pill-link:hover {
+  color: white;
+  transform: scale(1.05);
+  text-shadow: 0 0 30px rgba(255,255,255,0.3);
+}
+
+/* --- DESKTOP STYLES (Floating Glass Dock) --- */
+@media (min-width: 768px) {
+  .bubble.toggle-bubble { display: none !important; }
+
+  /* Center the dock */
+  .bubble-menu {
+    display: flex;
+    justify-content: center;
+    padding-top: 2.5rem;
+    width: 100%;
+  }
+
+  .bubble.logo-bubble { display: none; }
+
+  .bubble-menu-items {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    height: auto;
+    background: transparent !important;
+    display: block !important;
+    backdrop-filter: none;
+  }
+
+  /* THE GLASS PILL CONTAINER */
+  .pill-list {
+    position: relative;
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    background: var(--glass-bg);
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    
+    /* The Edge Highlight */
+    border: 1px solid var(--glass-border);
+    border-top: 1px solid var(--glass-highlight); /* Top light reflection */
+    border-bottom: 1px solid rgba(0,0,0,0.5); /* Bottom shadow */
+    
+    backdrop-filter: var(--glass-blur);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.6);
+    overflow: hidden; /* Contains the shine */
+  }
+
+  /* THE MOVING SHINE EFFECT */
+  .pill-list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      90deg, 
+      transparent, 
+      rgba(255, 255, 255, 0.1), 
+      transparent
+    );
+    transform: skewX(-25deg);
+    animation: shine 6s infinite ease-in-out; /* Runs every 6 seconds */
+    pointer-events: none;
+  }
+
+  /* LOGO inside the bar */
+  .pill-list li:first-child {
+    font-family: 'Courier New', Courier, monospace; /* Keeping logo distinct */
+    letter-spacing: -0.05em;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* LINKS */
+  .pill-link {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #9ca3af; /* Zinc-400 */
+    padding: 0.6rem 1.4rem;
+    background: transparent;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    
+    /* COOLER FONT STYLE */
+    text-transform: uppercase;
+    letter-spacing: 0.15em; /* Wide tracking for tech look */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* HOVER STATE */
+  .pill-link:hover {
+    background: var(--hover-bg) !important;
+    color: var(--hover-color) !important;
+    box-shadow: 0 0 25px var(--hover-bg); /* Stronger glow */
+    border-color: rgba(255,255,255,0.3);
+    text-shadow: 0 0 5px rgba(255,255,255,0.5);
+    transform: translateY(0); /* Lock in place */
+  }
+}

@@ -1,0 +1,56 @@
+/* src/LogoLoop.css */
+.logoloop {
+  position: relative;
+  --logoloop-gap: 32px;
+  --logoloop-logoHeight: 28px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.logoloop__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  user-select: none;
+}
+
+.logoloop__list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.logoloop__item {
+  flex: 0 0 auto;
+  margin-right: var(--logoloop-gap);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- IMAGE STYLING (THE FIX) --- */
+.logoloop__item img {
+  height: var(--logoloop-logoHeight);
+  width: auto;
+  object-fit: contain;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  
+  /* FORCE WHITE COLOR */
+  /* This ensures black/colored logos show up on your dark background */
+  filter: brightness(0) invert(1); 
+  opacity: 0.6; /* Slight transparency by default */
+}
+
+/* HOVER STATE: Bright & Glow */
+.logoloop:hover .logoloop__item img {
+  opacity: 1;
+  transform: scale(1.1);
+  filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.5));
+}
+
+.logoloop__item:last-child {
+  margin-right: var(--logoloop-gap);
+}

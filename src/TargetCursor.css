@@ -1,0 +1,38 @@
+/* src/TargetCursor.css */
+.target-cursor-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: exclusion; /* Makes it visible on dark/light backgrounds */
+}
+
+.target-cursor-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.target-cursor-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #fff;
+  transition: all 0.1s ease-out; /* Smooth follow delay */
+  border-radius: 1px;
+}
+
+/* Corner Orientations */
+.corner-tl { border-right: none; border-bottom: none; }
+.corner-tr { border-left: none; border-bottom: none; }
+.corner-bl { border-right: none; border-top: none; }
+.corner-br { border-left: none; border-top: none; }
