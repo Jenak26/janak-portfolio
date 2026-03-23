@@ -2,9 +2,9 @@ import React, { useRef, useEffect } from "react";
 
 export default function Beams({
   className,
-  beamWidth = 2, // comee here for sharpness 
-  beamHeight = 40, 
-  beamNumber = 50, // increase if feel so 
+  beamWidth = 2,
+  beamHeight = 40,
+  beamNumber = 50,
   lightColor = "#ffffff",
   speed = 1.5,
   rotation = 30,
@@ -14,21 +14,27 @@ export default function Beams({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    // Respect the OS-level "reduce motion" accessibility setting.
+    // If the user has enabled it, skip the animation entirely — the
+    // canvas stays blank and the page remains usable without motion.
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReducedMotion) return;
+
     const ctx = canvas.getContext("2d");
-    
     let animationFrameId;
     let width, height;
     const beams = [];
 
-    
     for (let i = 0; i < beamNumber; i++) {
       beams.push({
         x: Math.random() * window.innerWidth * 1.5 - window.innerWidth * 0.25,
         y: Math.random() * window.innerHeight * 1.5 - window.innerHeight * 0.5,
         speed: (Math.random() * 0.5 + 0.5) * speed,
         length: Math.random() * 300 + beamHeight * 10,
-       
-        opacity: Math.random() * 0.4 + 0.2, 
+        opacity: Math.random() * 0.4 + 0.2,
         width: Math.random() * beamWidth + 1,
       });
     }
@@ -41,38 +47,36 @@ export default function Beams({
     const render = () => {
       ctx.clearRect(0, 0, width, height);
       ctx.save();
-      
-      // rotation here
+
       ctx.translate(width / 2, height / 2);
       ctx.rotate((rotation * Math.PI) / 180);
       ctx.translate(-width / 2, -height / 2);
 
-      // less overlapping
+      // "lighter" blend mode makes overlapping beams brighter,
+      // creating a natural glow effect without extra draw calls
       ctx.globalCompositeOperation = "lighter";
 
       beams.forEach((beam) => {
-        // Move beam
         beam.y -= beam.speed;
-        
-        // Reset if off screen
+
+        // Reset beam to bottom when it scrolls off the top
         if (beam.y < -500) {
           beam.y = height + 500;
           beam.x = Math.random() * width * 1.5 - width * 0.25;
         }
 
-        // Draw the beam
-        const gradient = ctx.createLinearGradient(beam.x, beam.y, beam.x, beam.y + beam.length);
-        
-        // Tail fade 
+        const gradient = ctx.createLinearGradient(
+          beam.x, beam.y,
+          beam.x, beam.y + beam.length
+        );
+
+        const opacityHex = Math.floor(beam.opacity * 255)
+          .toString(16)
+          .padStart(2, "0");
+
         gradient.addColorStop(0, `rgba(255, 255, 255, 0)`);
-        
-        // Core (Bright & Visible)
-        
-        const opacityHex = Math.floor(beam.opacity * 255).toString(16).padStart(2, '0');
         gradient.addColorStop(0.4, `${lightColor}${opacityHex}`);
         gradient.addColorStop(0.6, `${lightColor}${opacityHex}`);
-        
-        // Head fade (transparent)
         gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
 
         ctx.fillStyle = gradient;
@@ -97,7 +101,7 @@ export default function Beams({
     <canvas
       ref={canvasRef}
       className={`fixed inset-0 z-0 pointer-events-none w-full h-full ${className}`}
-      style={{ background: "#020202" }} //bg clr
+      style={{ background: "#020202" }}
     />
   );
 }
