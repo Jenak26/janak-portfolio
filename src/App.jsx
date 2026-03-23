@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Components
 import IntroSequence from './IntroSequence';
 import BubbleMenu from './BubbleMenu';
 import Hero from './Hero';
@@ -13,6 +12,7 @@ import Skills from './Skills';
 import Projects from './Projects';
 import Experience from './Experience';
 import LoopBanner from './LoopBanner';
+import HireMe from './HireMe';
 import NotFound from './NotFound';
 
 function Portfolio() {
@@ -21,7 +21,6 @@ function Portfolio() {
   return (
     <div className="min-h-screen w-full text-white overflow-x-hidden selection:bg-red-500/30">
 
-      {/* Background beams — fixed layer behind everything */}
       <div className="fixed inset-0 z-0">
         <Beams
           beamWidth={2}
@@ -49,11 +48,12 @@ function Portfolio() {
           >
             <BubbleMenu />
 
+            {/* Floating button — always visible above all content */}
+            <HireMe />
+
             <main className="flex flex-col gap-0">
               <Hero />
               <TechTicker />
-              {/* About sits between TechTicker and Skills —
-                  tells your story before showing your skills */}
               <About />
               <Skills />
               <Projects />
