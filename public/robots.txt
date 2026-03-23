@@ -1,0 +1,9 @@
+# robots.txt
+# Tells search engine crawlers which pages they can index.
+# "Allow all" is correct for a public portfolio site.
+
+User-agent: *
+Allow: /
+
+# Points crawlers to your sitemap so they can discover all pages faster
+Sitemap: https://janakkabra.in/sitemap.xml

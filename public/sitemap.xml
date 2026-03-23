@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  sitemap.xml
+  Tells Google and other search engines about all the pages on your site.
+  For a single-page app (SPA) like yours, we list the main URL plus
+  the hash-based section anchors so crawlers know what content exists.
+
+  lastmod = date you last made significant content changes (update this
+  when you add projects, experience entries etc.)
+
+  changefreq = how often this page's content changes
+  priority   = relative importance (1.0 = most important)
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main page -->
+  <url>
+    <loc>https://janakkabra.in/</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Section anchors — helps crawlers understand your content structure -->
+  <url>
+    <loc>https://janakkabra.in/#skills</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://janakkabra.in/#experience</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://janakkabra.in/#projects</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+</urlset>
