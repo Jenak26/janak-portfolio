@@ -7,6 +7,7 @@ import IntroSequence from './IntroSequence';
 import BubbleMenu from './BubbleMenu';
 import Hero from './Hero';
 import Beams from './Beams';
+import About from './About';
 import TechTicker from './TechTicker';
 import Skills from './Skills';
 import Projects from './Projects';
@@ -14,7 +15,6 @@ import Experience from './Experience';
 import LoopBanner from './LoopBanner';
 import NotFound from './NotFound';
 
-// The main portfolio page — extracted so the router stays clean
 function Portfolio() {
   const [introComplete, setIntroComplete] = useState(false);
 
@@ -31,17 +31,14 @@ function Portfolio() {
           speed={1.5}
           rotation={30}
         />
-        {/* Radial fade so text stays readable over the beams */}
         <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/80 pointer-events-none" />
       </div>
 
       <AnimatePresence mode="wait">
-        {/* Intro sequence — shown once on first load */}
         {!introComplete && (
           <IntroSequence key="intro" onComplete={() => setIntroComplete(true)} />
         )}
 
-        {/* Main content — fades in after intro completes */}
         {introComplete && (
           <motion.div
             key="main"
@@ -55,6 +52,9 @@ function Portfolio() {
             <main className="flex flex-col gap-0">
               <Hero />
               <TechTicker />
+              {/* About sits between TechTicker and Skills —
+                  tells your story before showing your skills */}
+              <About />
               <Skills />
               <Projects />
               <Experience />
@@ -71,11 +71,6 @@ function Portfolio() {
   );
 }
 
-// BrowserRouter wraps the whole app so all child components can use
-// hooks like useNavigate, useLocation etc. if needed later.
-// Routes renders only the FIRST <Route> that matches the current URL.
-// The path="*" wildcard catches every URL that doesn't match "/" and
-// renders the 404 page.
 export default function App() {
   return (
     <BrowserRouter>
