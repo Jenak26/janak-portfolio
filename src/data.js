@@ -24,6 +24,30 @@ export const profile = {
 
 export const projects = [
   {
+    title: 'Event-Driven Backtester',
+    year: 'Jun 2026',
+    tagline: 'A look-ahead-safe simulation loop for statistical arbitrage.',
+    story: [
+      `I wanted to build a backtesting environment that is structurally immune
+       to look-ahead bias—a common pitfall in vectorized backtesters where
+       future data can sneak in via index slicing. I designed an event-driven
+       engine that steps through historical bar data one step at a time,
+       generating market events, calculating signals, sizing orders, and
+       simulating execution at the next bar's open.`,
+      `As a testbed for the engine, I implemented a cointegration-based statistical
+       arbitrage pairs trading strategy. Using a two-stage Engle-Granger screening
+       process with a held-out qualification period on S&P 500 stocks, the system
+       identifies sector-matched stock pairs, calculates dynamic z-scores of their
+       log spreads, and executes trades upon divergence thresholds. Out-of-sample
+       walk-forward validation confirms the statistical integrity of the discovery method.`,
+    ],
+    specs: 'Event-driven simulator · Engle-Granger cointegration screening · Next-bar fills · Out-of-sample validation',
+    tech: ['Python', 'Pandas', 'NumPy', 'Statsmodels', 'yfinance'],
+    live: null,
+    github: 'https://github.com/Jenak26/event-driven-backtester',
+    image: null,
+  },
+  {
     title: 'Volatility Surface Engine',
     year: 'May 2026',
     tagline: 'Options pricing from first principles.',
