@@ -9,10 +9,9 @@ export const profile = {
   status: 'Open to internships',
   currently: 'AI Domain Intern @ Infosys Springboard',
   resumeUrl: '/resume-swe.pdf',
-  // Quant resume is work in progress; add it back here when ready:
-  // { label: 'Resume · Quant', href: '/resume-quant.pdf' }
   resumes: [
-    { label: 'Resume', href: '/resume-swe.pdf' },
+    { label: 'Resume · SWE', href: '/resume-swe.pdf' },
+    { label: 'Resume · Quant', href: '/resume-quant.pdf' },
   ],
   socials: [
     { label: 'GitHub', href: 'https://github.com/Jenak26', icon: 'github' },
@@ -23,6 +22,53 @@ export const profile = {
 };
 
 export const projects = [
+  {
+    title: 'raftkv',
+    year: 'Jun 2026',
+    tagline: 'A provably linearizable distributed key-value store in Go.',
+    story: [
+      `I built a fault-tolerant key-value store based on a from-scratch implementation
+       of the Raft consensus algorithm in Go. To prove correctness under extreme
+       conditions, I isolated all non-determinism (time, network, and disk) behind
+       interfaces, allowing me to run the entire cluster inside a deterministic,
+       seeded simulation. This environment can delay, reorder, or partition messages,
+       and crash/restart nodes reproducibly.`,
+      `To verify safety, I implemented a Jepsen-style testing harness and a hand-written
+       linearizability checker that validates the execution history of concurrent client
+       operations against a single correct state machine. This setup successfully exposed
+       three subtle concurrency bugs (documented in the repository's "bug museum"),
+       turning what is typically an untraceable distributed race condition into a
+       repeatable seed: 'make chaos SEED=42'.`,
+    ],
+    specs: 'From-scratch Raft consensus · Deterministic simulation testing · Jepsen-style fault injection · Linearizability verification engine',
+    tech: ['Go', 'Raft', 'Concurrency', 'Network Simulation', 'Jepsen testing'],
+    live: 'https://raftkv.onrender.com',
+    github: 'https://github.com/Jenak26/raftkv',
+    image: null,
+  },
+  {
+    title: 'CryptoVault',
+    year: 'Jun 2026',
+    tagline: 'Crypto-agile secrets engine with envelope encryption.',
+    story: [
+      `I developed a crypto-agile secrets-storage engine in Spring Boot and React
+       to demonstrate proper application of low-level security patterns. The vault
+       implements envelope encryption, wrapping data encryption keys (DEKs) using a
+       master Key-Encrypting-Key (KEK) derived via HKDF-SHA256 from a high-entropy secret.
+       Pluggable cryptographic strategies allow swapping the active cipher between AES-256-GCM
+       and ChaCha20-Poly1305 via config without interrupting legacy decryptions.`,
+      `The security architecture features stateless JWT auth with server-side revocation
+       in Redis, a hand-rolled RFC 6238 TOTP multi-factor authentication system with
+       recovery codes, and brute-force rate-limiting. A full auditing system writes user,
+       IP, and event logs. The codebase is backed by Testcontainers integration tests
+       that boot real MySQL and Redis instances on every CI/CD run.`,
+    ],
+    specs: 'Crypto-agility strategy · Envelope encryption (HKDF-SHA256) · Hand-rolled RFC 6238 TOTP · Testcontainers (MySQL/Redis) CI',
+    tech: ['Java 21', 'Spring Boot 3', 'Spring Security', 'MySQL', 'Redis', 'React 19', 'TypeScript', 'Testcontainers'],
+    live: 'https://cryptovault-beige-beta.vercel.app',
+    github: 'https://github.com/Jenak26/cryptovault',
+    image: null,
+  },
   {
     title: 'Event-Driven Backtester',
     year: 'Jun 2026',
@@ -200,8 +246,8 @@ export const skills = [
   { group: 'Core', items: ['Python', 'TypeScript / JavaScript', 'SQL'] },
   { group: 'Familiar', items: ['C++', 'C', 'Java', 'Go', 'C#'] },
   { group: 'Quant', items: ['Black-Scholes', 'Heston model', 'SVI', 'Monte Carlo', 'Option Greeks', 'LSTM / ARIMA', 'Probability', 'Linear Algebra'] },
-  { group: 'Frameworks', items: ['React', 'Next.js', 'Node.js', 'FastAPI', 'PyTorch', 'TensorFlow', 'OpenCV', 'NumPy', 'Pandas', 'SciPy', 'Numba JIT', 'Tailwind CSS', 'Framer Motion', 'Zustand', 'Plotly'] },
-  { group: 'Tools', items: ['PostgreSQL', 'MySQL', 'Git', 'Docker', 'Linux', 'GitHub Actions', 'Vercel', 'Postman', 'Power BI'] },
+  { group: 'Frameworks', items: ['React', 'Next.js', 'Node.js', 'FastAPI', 'Spring Boot', 'Spring Security', 'PyTorch', 'TensorFlow', 'OpenCV', 'NumPy', 'Pandas', 'SciPy', 'Numba JIT', 'Tailwind CSS', 'Framer Motion', 'Zustand', 'Plotly'] },
+  { group: 'Tools', items: ['PostgreSQL', 'MySQL', 'Git', 'Docker', 'Linux', 'GitHub Actions', 'Vercel', 'Postman', 'Power BI', 'Testcontainers'] },
 ];
 
 export const facts = [
