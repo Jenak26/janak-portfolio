@@ -117,27 +117,6 @@ export const projects = [
     image: null,
   },
   {
-    title: 'InternshipGOAT',
-    year: 'May 2026',
-    tagline: 'First to know when a role opens.',
-    story: [
-      `Born from a real problem: by the time you see an internship posting on
-       LinkedIn, a thousand people have already applied. So I found 53
-       companies with public job APIs (Jane Street, OpenAI, Stripe, CRED and
-       more) and pointed GitHub Actions at them every 10 minutes.`,
-      `The moment a matching intern or new-grad role goes live, the Telegram
-       bot pings you, with filters for India-relevant locations, batch year,
-       and technical roles. The whole thing runs 24/7 and costs exactly
-       nothing: Actions for scanning, Render for the bot, UptimeRobot to keep
-       it awake.`,
-    ],
-    specs: '53 company APIs · 10-minute alerts · runs 24/7 free',
-    tech: ['Python', 'GitHub Actions', 'Telegram Bot API', 'Render'],
-    live: null,
-    github: 'https://github.com/Jenak26/internship-goat',
-    image: null,
-  },
-  {
     title: 'Algorithm Execution Debugger',
     year: 'Apr 2026',
     tagline: 'A debugger for algorithms, not just a visualizer.',
