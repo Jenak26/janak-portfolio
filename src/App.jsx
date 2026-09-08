@@ -6,7 +6,8 @@ import { labProjects } from './labData';
 import NotFound from './NotFound';
 import ProjectArt from './ProjectArt';
 import OffScript from './OffScript';
-import ConceptSwitcher from './ConceptSwitcher';
+import OffScriptClassic from './OffScriptClassic';
+
 const Arrow = () => <span aria-hidden="true">↗</span>;
 const External = ({
   href,
@@ -67,7 +68,7 @@ function Portfolio() {
   };
   return <div id="home" className={`site-shell${paused ? ' motion-paused' : ''}`}>
     <a className="skip-link" href="#main">Skip to content</a>
-    <header className="site-header"><a href="#home" className="wordmark" aria-label="Janak Kabra, home">j<span className="wordmark-star">✳</span>k<span className="wordmark-dot">.</span></a><span className="header-note mono">INDEPENDENT MIND.<br />INFINITE POSSIBILITIES.</span><nav aria-label="Main navigation"><a href="#work">Work <sup>08</sup></a><a href="#about">The human</a><a href="#contact" className="nav-contact">Let’s talk <Arrow /></a></nav></header>
+    <header className="site-header"><a href="#home" className="wordmark" aria-label="Janak Kabra, home">j<span className="wordmark-star">✳</span>k<span className="wordmark-dot">.</span></a><span className="header-note mono">INDEPENDENT MIND.<br />INFINITE POSSIBILITIES.</span><nav aria-label="Main navigation"><a href="#work">Work <sup>{String(labProjects.length).padStart(2, '0')}</sup></a><a href="#about">The human</a><a href="#contact" className="nav-contact">Let’s talk <Arrow /></a></nav></header>
     <main id="main">
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-eyebrow mono"><span><i className="status-dot" /> JANAK KABRA / CREATIVE DEVELOPER</span><span className="hero-edition">PORTFOLIO VOL. 02 / 2026</span></div>
@@ -91,5 +92,7 @@ function Portfolio() {
   </div>;
 }
 export default function App() {
-  return <BrowserRouter><ConceptSwitcher /><Routes><Route path="/" element={<OffScript />} /><Route path="/concept-a" element={<Portfolio />} /><Route path="/concept-b" element={<OffScript />} /><Route path="*" element={<NotFound />} /></Routes></BrowserRouter>;
+  return <BrowserRouter><Routes><Route path="/" element={<OffScript />} /><Route path="/concept-a" element={<Portfolio />} /><Route path="/concept-b" element={<OffScript />} /><Route path="/concept-b-original" element={<OffScriptClassic />} /><Route path="*" element={<NotFound />} /></Routes></BrowserRouter>;
 }
+
+import './offscript.css';

@@ -11,7 +11,6 @@ export default function ConceptSwitcher() {
       behavior: 'instant'
     });
   }, [pathname]);
-  if (!['/', '/concept-a', '/concept-b'].includes(pathname)) return null;
-  const isA = pathname === '/concept-a';
-  return <nav className="concept-switcher" aria-label="Compare design concepts"><span>DESIGN STUDY</span><Link to="/concept-a" aria-current={isA ? 'page' : undefined}>A <span>Curiosity Lab</span></Link><Link to="/concept-b" aria-current={!isA ? 'page' : undefined}>B <span>Off Script</span></Link></nav>;
+  if (!['/', '/concept-a', '/concept-b', '/concept-b-original'].includes(pathname)) return null;
+  return <nav className="concept-switcher" aria-label="Compare design concepts"><span>DESIGN STUDY</span><Link to="/concept-a" aria-current={pathname === '/concept-a' ? 'page' : undefined}>A <span>Curiosity Lab</span></Link><Link to="/concept-b-original" aria-current={pathname === '/concept-b-original' ? 'page' : undefined}>B <span>Original</span></Link><Link to="/concept-b" aria-current={['/', '/concept-b'].includes(pathname) ? 'page' : undefined}>B <span>Refined ↗</span></Link></nav>;
 }

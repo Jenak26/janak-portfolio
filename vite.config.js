@@ -3,5 +3,14 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), {
+    name: 'legacy-site-route',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        if (req.url === '/oldsite') { res.writeHead(302, { Location: '/oldsite/' }); res.end(); return; }
+        if (req.url?.split('?')[0] === '/oldsite/') req.url = '/oldsite/index.html';
+        next();
+      });
+    },
+  }],
 })

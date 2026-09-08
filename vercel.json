@@ -1,3 +1,19 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "redirects": [
+    {
+      "source": "/oldsite",
+      "destination": "/oldsite/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/oldsite/",
+      "destination": "/oldsite/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
