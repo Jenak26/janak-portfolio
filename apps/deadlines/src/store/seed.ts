@@ -1,0 +1,157 @@
+/* The exact list v1 ships, used on a first run with no saved data. */
+export const SEED_V1 = [
+  {
+    "id": "os-lab-midterm-2",
+    "title": "OS lab mid term 2",
+    "course": "os",
+    "kind": "test",
+    "due": "2026-10-12",
+    "from": "",
+    "note": "",
+    "done": false,
+    "lead": 4
+  },
+  {
+    "id": "cloud-presentation",
+    "title": "Cloud presentation in class",
+    "course": "cloud",
+    "kind": "present",
+    "due": "2026-10-16",
+    "from": "2026-10-12",
+    "note": "Exact day not fixed yet. Confirm it.",
+    "done": false,
+    "lead": 3
+  },
+  {
+    "id": "cn-lab-midterm",
+    "title": "CN lab midterm",
+    "course": "cn",
+    "kind": "test",
+    "due": "2026-10-15",
+    "from": "",
+    "note": "",
+    "done": false,
+    "lead": 2
+  },
+  {
+    "id": "cn-theory-quiz",
+    "title": "CN theory quiz",
+    "course": "cn",
+    "kind": "test",
+    "due": "2026-10-15",
+    "from": "",
+    "note": "",
+    "done": false,
+    "lead": 2
+  },
+  {
+    "id": "dbms-lab-quiz",
+    "title": "DBMS lab quiz",
+    "course": "dbms",
+    "kind": "test",
+    "due": "2026-10-15",
+    "from": "",
+    "note": "",
+    "done": false,
+    "lead": 2
+  },
+  {
+    "id": "cn-case-study",
+    "title": "CN case study, handwritten",
+    "course": "cn",
+    "kind": "submit",
+    "due": "2026-10-15",
+    "from": "",
+    "note": "Last day.",
+    "done": false,
+    "lead": 5
+  },
+  {
+    "id": "dbms-theory-quiz",
+    "title": "DBMS theory quiz",
+    "course": "dbms",
+    "kind": "test",
+    "due": "2026-10-22",
+    "from": "",
+    "note": "Morning class.",
+    "done": false,
+    "lead": 2
+  },
+  {
+    "id": "dbms-guest-lecture",
+    "title": "DBMS guest lecture",
+    "course": "dbms",
+    "kind": "attend",
+    "due": "2026-10-22",
+    "from": "",
+    "note": "",
+    "done": false,
+    "lead": 0
+  },
+  {
+    "id": "os-review-2",
+    "title": "OS review 2",
+    "course": "os",
+    "kind": "submit",
+    "due": "2026-10-22",
+    "from": "",
+    "note": "Last day.",
+    "done": false,
+    "lead": 5
+  },
+  {
+    "id": "dbms-case-study",
+    "title": "DBMS case study, handwritten",
+    "course": "dbms",
+    "kind": "submit",
+    "due": "2026-10-22",
+    "from": "",
+    "note": "Has to be in before 23 Oct.",
+    "done": false,
+    "lead": 4
+  },
+  {
+    "id": "cloud-case-study",
+    "title": "Cloud case study",
+    "course": "cloud",
+    "kind": "submit",
+    "due": "2026-10-23",
+    "from": "",
+    "note": "Last day.",
+    "done": false,
+    "lead": 3
+  },
+  {
+    "id": "dbms-lab-project",
+    "title": "DBMS lab project",
+    "course": "dbms",
+    "kind": "submit",
+    "due": "2026-10-23",
+    "from": "",
+    "note": "Before 24 Oct. Coordinate with the team.",
+    "done": false,
+    "lead": 7
+  },
+  {
+    "id": "compiler-lab-project",
+    "title": "Compiler lab project review and final submission",
+    "course": "compiler",
+    "kind": "submit",
+    "due": "",
+    "from": "",
+    "note": "No date written down. Get it from faculty.",
+    "done": false,
+    "lead": 0
+  },
+  {
+    "id": "ai-research-paper",
+    "title": "AI research paper",
+    "course": "ai",
+    "kind": "submit",
+    "due": "",
+    "from": "",
+    "note": "30 internal marks.",
+    "done": false,
+    "lead": 0
+  }
+];
