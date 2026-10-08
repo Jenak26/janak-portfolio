@@ -68,7 +68,7 @@ describe("loading", () => {
     const kv = memKV({ [V1_KEY]: raw });
     const r = load(kv);
     expect(r.source).toBe("migrated");
-    expect(r.notice).toMatch(/Moved 14 deadlines/);
+    expect(r.notice).toMatch(/Moved 15 deadlines/);
     expect(r.state.tasks[0].done).toBe(true);
     expect(kv.data[V1_KEY]).toBe(raw);
   });

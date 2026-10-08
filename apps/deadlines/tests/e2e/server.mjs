@@ -1,7 +1,8 @@
 /* Static server for e2e and Lighthouse runs. Mirrors the Vercel rules this app relies on:
    /deadlines redirects to /deadlines/, /deadlines/ serves index.html, files are served as is
    with max-age=0, must-revalidate. GET /__mode/v1 swaps /deadlines/ to the original v1 files
-   (to test the v1 to v2 takeover); /__mode/v2 swaps back. */
+   (to test the v1 to v2 takeover); /__mode/next serves v2 with a byte-different sw.js, like a
+   new deploy; /__mode/v2 swaps back. */
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { extname, join, normalize, resolve } from "node:path";
@@ -21,7 +22,7 @@ const TYPES = {
 createServer(async (req, res) => {
   const url = new URL(req.url, "http://x");
   if (url.pathname.startsWith("/__mode/")) {
-    mode = url.pathname.endsWith("v1") ? "v1" : "v2";
+    mode = url.pathname.split("/").pop();
     res.writeHead(200, { "Content-Type": "text/plain" }).end(mode);
     return;
   }
@@ -39,7 +40,8 @@ createServer(async (req, res) => {
   if (!file.startsWith(base)) { res.writeHead(403).end(); return; }
   try {
     if (!(await stat(file)).isFile()) throw new Error("dir");
-    const body = await readFile(file);
+    let body = await readFile(file);
+    if (mode === "next" && rel === "sw.js") body = Buffer.concat([body, Buffer.from("\n// next build\n")]);
     res.writeHead(200, { "Content-Type": TYPES[extname(file)] || "application/octet-stream", "Cache-Control": "public, max-age=0, must-revalidate" });
     res.end(body);
   } catch {
