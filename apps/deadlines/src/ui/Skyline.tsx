@@ -71,11 +71,11 @@ export function Skyline({ tasks, courses, today, crunchList, onPickDay }: Props)
                 type="button"
                 class={["day", wd === 0 || wd === 6 ? "off" : "", wd === 1 && i > 0 ? "mon" : "", d.date === today ? "now" : "", open.length >= 3 ? "heavy" : "", d.crunch ? "crunch" : ""].filter(Boolean).join(" ")}
                 tabIndex={i === idx ? 0 : -1}
-                aria-label={label}
                 aria-current={d.date === today ? "date" : undefined}
                 onFocus={() => setFocus(i)}
                 onClick={() => onPickDay(d.date, target)}
               >
+                <span class="sr-only">{label}</span>
                 <span class="mo" aria-hidden="true">{first ? MONTHS[+d.date.slice(5, 7) - 1] : ""}</span>
                 <span class="cnt" aria-hidden="true">{open.length >= 2 ? open.length : ""}</span>
                 <span class="stack" style={{ height: `${rows * 15 + 3}px` }} aria-hidden="true">

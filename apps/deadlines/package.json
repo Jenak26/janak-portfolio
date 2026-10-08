@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --port 4174 --strictPort",
     "test": "vitest run",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "lighthouse": "node tests/lighthouse.mjs"
   },
   "dependencies": {
     "preact": "^10.29.8"
@@ -18,6 +19,7 @@
     "@playwright/test": "^1.64.0",
     "@preact/preset-vite": "^2.10.6",
     "@types/node": "^22.20.5",
+    "lighthouse": "^12.8.2",
     "typescript": "^7.0.2",
     "vite": "^7.3.7",
     "vitest": "^5.0.3"
