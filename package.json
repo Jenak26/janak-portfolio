@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && npm ci --prefix apps/deadlines && npm run build --prefix apps/deadlines",
     "lint": "eslint .",
     "preview": "vite preview"
   },

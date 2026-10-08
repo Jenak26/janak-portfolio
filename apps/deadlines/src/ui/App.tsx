@@ -23,11 +23,14 @@ const TOAST_MS = 6000;
 
 export function App() {
   const [unlocked, setUnlocked] = useState(isUnlocked);
+  const [update, setUpdate] = useState<(() => void) | null>(null);
+  // Registered before the lock check, so even a visit that stops at the lock screen is saved for offline.
+  useEffect(() => registerSW(apply => setUpdate(() => apply)), []);
   if (!unlocked) return <Lock onUnlock={() => setUnlocked(true)} />;
-  return <Board onLock={() => { lock(); setUnlocked(false); }} />;
+  return <Board update={update} onLock={() => { lock(); setUnlocked(false); }} />;
 }
 
-function Board({ onLock }: { onLock: () => void }) {
+function Board({ onLock, update }: { onLock: () => void; update: (() => void) | null }) {
   const board = useBoard();
   const { state, readOnly } = board;
   const today = useToday();
@@ -35,14 +38,11 @@ function Board({ onLock }: { onLock: () => void }) {
   const [editor, setEditor] = useState<EditorState>(null);
   const [settingsFrom, setSettingsFrom] = useState<HTMLElement | null | false>(false);
   const [toast, setToast] = useState<Toast | null>(null);
-  const [update, setUpdate] = useState<(() => void) | null>(null);
   const [pendingImport, setPendingImport] = useState<{ state: BoardState; name: string } | null>(null);
   const [status, setStatus] = useState<{ text: string; bad?: boolean } | null>(null);
   const toastTimer = useRef(0);
   const toastHeld = useRef(false);
   const fileRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => registerSW(apply => setUpdate(() => apply)), []);
 
   // Filter falls back to everything when its course has no deadlines any more.
   const usedCourses = useMemo(() => state.courses.filter(c => state.tasks.some(t => t.course === c.id)), [state]);

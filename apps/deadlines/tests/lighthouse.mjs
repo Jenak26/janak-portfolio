@@ -26,7 +26,12 @@ try {
   report("locked");
   const page = await ctx.newPage();
   await page.goto(URL_);
-  await page.evaluate(() => localStorage.setItem("deadlines-unlocked", "1cfafff6d51a0366"));
+  // Keep only the unlock: drop the worker and its cache so the board run is a cold first load.
+  await page.evaluate(async () => {
+    localStorage.setItem("deadlines-unlocked", "1cfafff6d51a0366");
+    for (const r of await navigator.serviceWorker.getRegistrations()) await r.unregister();
+    for (const k of await caches.keys()) await caches.delete(k);
+  });
   await page.close();
   await run(["--output-path=.lighthouse/board.json", "--disable-storage-reset"]);
   report("board");

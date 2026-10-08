@@ -20,11 +20,13 @@ async function unlock(page: Page) {
 
 const row = (page: Page, title: string) => page.locator("main .group li.task", { hasText: title }).first();
 
+/* Polls from the test side: waitForFunction does not await an async predicate, so a Promise
+   (always truthy) would pass at once, before the worker has even installed. */
 async function swControlled(page: Page) {
-  await page.waitForFunction(async () => {
+  await expect.poll(() => page.evaluate(async () => {
     const reg = await navigator.serviceWorker.getRegistration("/deadlines/");
-    return !!reg?.active && !!navigator.serviceWorker.controller;
-  }, null, { timeout: 20_000 });
+    return reg?.active?.state === "activated" && !!navigator.serviceWorker.controller && (await caches.keys()).length > 0;
+  }), { timeout: 20_000 }).toBe(true);
 }
 
 test("lock, first-run seed, quick add, tick, undo, edit, delete", async ({ page }) => {
@@ -182,7 +184,7 @@ test("takes over from an installed v1 and keeps its data", async ({ page, reques
     // which skips waiting and reloads the page into v2.
     await page.reload();
     await expect(page.getByLabel("Code")).toBeVisible({ timeout: 20_000 });
-    await page.waitForFunction(async () => (await caches.keys()).every(k => k.startsWith("deadlines-v2-")) && (await caches.keys()).length === 1, null, { timeout: 20_000 });
+    await expect.poll(() => page.evaluate(async () => (await caches.keys()).join()), { timeout: 20_000 }).toMatch(/^deadlines-v2-[0-9a-f]{12}$/);
     await unlock(page);
     await expect(page.getByText(/Moved 14 deadlines over/)).toBeVisible();
     await expect(row(page, "CN theory quiz")).toHaveClass(/done/);
@@ -196,7 +198,6 @@ test("offers an update instead of swapping versions under you", async ({ page, r
   await page.goto(APP);
   await unlock(page);
   await swControlled(page);
-  const before = await page.evaluate(async () => (await caches.keys()).join());
   await request.get("/__mode/next");
   try {
     await page.evaluate(async () => (await navigator.serviceWorker.getRegistration("/deadlines/"))!.update());
@@ -206,9 +207,23 @@ test("offers an update instead of swapping versions under you", async ({ page, r
     expect(await page.evaluate(async () => !!(await navigator.serviceWorker.getRegistration("/deadlines/"))!.waiting)).toBe(true);
     await Promise.all([page.waitForEvent("load"), prompt.getByRole("button", { name: "Reload" }).click()]);
     await expect(page.getByRole("heading", { name: "On your plate" })).toBeVisible();
-    await page.waitForFunction(async b => (await caches.keys()).join() !== b && (await caches.keys()).length === 1, before);
+    await expect.poll(() => page.evaluate(async () => (await caches.keys()).join())).toMatch(/^deadlines-v2-[0-9a-f]{12}$/);
+    // The new worker took over: nothing is left waiting. (The cache name stays the same here because
+    // only sw.js changed; a real deploy changes the content hash and with it the cache name.)
+    await expect.poll(() => page.evaluate(async () => !(await navigator.serviceWorker.getRegistration("/deadlines/"))!.waiting)).toBe(true);
     await expect(page.locator(".toast", { hasText: "Update ready" })).toHaveCount(0);
   } finally {
     await request.get("/__mode/v2");
   }
+});
+
+test("a visit that stops at the lock screen is still saved for offline", async ({ page, context }) => {
+  await page.goto(APP);
+  await expect(page.getByLabel("Code")).toBeVisible();
+  await swControlled(page);
+  await context.setOffline(true);
+  await page.reload();
+  await unlock(page);
+  await expect(page.locator("main .group li.task")).toHaveCount(14);
+  await context.setOffline(false);
 });

@@ -4,12 +4,30 @@
       "source": "/oldsite",
       "destination": "/oldsite/",
       "permanent": false
+    },
+    {
+      "source": "/deadlines",
+      "destination": "/deadlines/",
+      "permanent": false
+    },
+    {
+      "source": "/deadlines-v1",
+      "destination": "/deadlines-v1/",
+      "permanent": false
     }
   ],
   "rewrites": [
     {
       "source": "/oldsite/",
       "destination": "/oldsite/index.html"
+    },
+    {
+      "source": "/deadlines/",
+      "destination": "/deadlines/index.html"
+    },
+    {
+      "source": "/deadlines-v1/",
+      "destination": "/deadlines-v1/index.html"
     },
     {
       "source": "/(.*)",
